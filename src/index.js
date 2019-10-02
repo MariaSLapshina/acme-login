@@ -44,21 +44,23 @@ actions.logout = ()=> {
 
 /* Login */
 class _Login extends Component{
+  
   render(){
     const { attemptLogin } = this.props;
     return (
         <div>
-          <button onClick={ ()=> attemptLogin('moe')}>Login As Moe</button>
-          <button onClick={ ()=> attemptLogin('lucy')}>Login As Lucy</button>
+          {users.map(user => <button onClick={ ()=> attemptLogin()}>Login As {user.name}></button>)}
+          {/* <button onClick={ ()=> attemptLogin('moe')}>Login As Moe</button> */}
+          {/* <button onClick={ ()=> attemptLogin('lucy')}>Login As Lucy</button> */}
         </div>
     );
   }
 }
 
 const Login = connect(
-  ()=> {
+  ({ users })=> {
     return {
-
+      users
     };
   },
   (dispatch, { history })=> {
@@ -85,6 +87,12 @@ const Home = connect(
       }
     }
 )(_Home);
+
+
+
+
+
+
 
 /* App */
 class _App extends Component{

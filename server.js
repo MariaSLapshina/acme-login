@@ -4,7 +4,7 @@ app.use(express.json());
 const path = require('path');
 
 app.use(require('express-session')({
-  secret: process.env.SECRET 
+  secret: process.env.SECRET || 'secret'
 }));
 const port = process.env.PORT || 3000;
 app.listen(port, ()=> console.log(`listening on port ${port}`));
@@ -21,24 +21,26 @@ const users = {
     favoriteWord: 'bar'
   }
 };
-app.use(express.cookieParser('secret'));
-app.use(express.cookieSession());
+
 app.use((req,res,next)=> {
+    const sessions = {}
     const cookies = req.headers.cookie || ''
-    const cookie = cookies.splot('; ').reduce((acc,pair)=> {
+    const cookie = cookies.split('; ').reduce((acc,pair)=> {
         const [key, value] = pair.split("=")
         acc[key] = value
         return acc
     }
  , {})
-    let sessionId = cookie.sessionId
-    if(!sessionId){
-        sessionId = Math.random()
-        res.set('Set-Cookie', `sessionId=${sessionId}`)
-    }
-    sessions[sessionId] = sessions[sessionId] || {}
-    req.session = sessions[sessionsId]
     next()
+    // let sessionId = cookie.sessionId
+    // if(!sessionId){
+    //     sessionId = Math.random()
+    //     res.set('Set-Cookie', `sessionId=${sessionId}`)
+    // }
+    // sessions[sessionId] = sessions[sessionId] || {}
+    // req.session = sessions[sessionId]
+    // console.log(req.session);
+    // next()
 })
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
