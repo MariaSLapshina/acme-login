@@ -37,7 +37,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "pg": "^7.12.1",
